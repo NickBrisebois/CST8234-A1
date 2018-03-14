@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"node.h"
+#include"main.h"
 #include"rental.h"
 
 Property* defineProperty(){
@@ -24,6 +25,7 @@ Property* generateProperties(int numProps){
 	return pHead;
 }
 
-int randInt(int min, int max){
-	return (rand() % (max + 1 - min) + min);
+void addProperty(Property* pHead){
+	pushNode(&pHead, defineProperty());
 }
+

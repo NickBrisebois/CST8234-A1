@@ -38,10 +38,11 @@ void getChoice(Property* pAllHead, Property* pFavHead, Property* pCurList){
 			pCurList = pFavHead;
 		}else if(strcmp(menuChoice, "d") == 0){
 			printf("%s\n", "Switched to default list");
+			if(randInt(0, 1) == 1)
+				addProperty(pAllHead);
 			pCurList = pAllHead;
 		}
 	}
-
 }
 
 void printHelp(){
@@ -74,3 +75,8 @@ void printTabs() {
 	printf("%-27s \t\t %7s \t %7s \t %9s\n", "Address", "# Rooms", "Rent/Room", "Distance");
 	printf("%s \t\t %s \t %s \t %s \n", "--------------------------", "-------", "---------", "---------");
 }
+
+int randInt(int min, int max){
+	return (rand() % (max + 1 - min) + min);
+}
+

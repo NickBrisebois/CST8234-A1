@@ -2,6 +2,11 @@
 #define MAIN_H_INCLUDED
 
 /**
+ * Generates a random integer between min and max
+ */
+int randInt(int min, int max);
+
+/**
  * Handles the main menu, gets user input and calls respective functions
  */
 void getChoice(Property* pAllHead, Property* pFavHead, Property* pCurList);
@@ -16,9 +21,10 @@ void printHelp();
  */
 void printProperties(Property* pRentalsHead);
 
-/*
+/**
  * Prints the top tabs for printProperties
  */
 void printTabs();
+
 
 #endif

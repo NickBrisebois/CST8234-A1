@@ -12,8 +12,8 @@ Property* defineProperty();
 Property* generateProperties(int numProps);
 
 /*
- * Generates a random integer between min and max
+ * Add a new property to the given list
  */
-int randInt(int min, int max);
+void addProperty(Property* pHead);
 
 #endif
