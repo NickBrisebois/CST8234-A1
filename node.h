@@ -14,9 +14,13 @@ typedef struct prop{
 } Property;
 
 /**
- * Declare functions used in node.c
+ * Creates a single property node and allocates space for it
  */
 Property* createPropertyNode();
+
+/*
+ * Pushes a new node to a given list 
+ */
 void pushNode(Property** ppHead, Property* pNewPropNode);
 
 #endif
