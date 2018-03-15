@@ -26,5 +26,10 @@ void printProperties(Property* pRentalsHead);
  */
 void printTabs();
 
+/**
+ * Get users's opinion the the property at the head of the given list
+ */
+void askOpinion(Property* pHead);
+
 
 #endif

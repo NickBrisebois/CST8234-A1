@@ -15,7 +15,7 @@ int main(){
 	Property* pAllHead = generateProperties(10);
 	Property* pFavHead = NULL;
 	Property* pCurList = pAllHead;
-
+	
 	getChoice(pAllHead, pFavHead, pCurList);
 
 	return 0;
@@ -26,6 +26,10 @@ void getChoice(Property* pAllHead, Property* pFavHead, Property* pCurList){
 
 	// Keep looping back to the menu until the user requests to exit by entering q
 	while(strcmp(menuChoice, "q") != 0){
+		
+		printProperties(pCurList);
+		askOpinion(pCurList);
+
 		printf("Command ('h' for help): ");
 		scanf("%255s", menuChoice);
 
@@ -65,15 +69,20 @@ void printProperties(Property* pRentalsHead){
 	if(pRentalsHead != NULL){
 		printTabs();
 		for(Property* pPropNode = pRentalsHead; pPropNode != NULL; pPropNode = pPropNode->pNextProp){
-			printf(" %2d %-24s \t\t %7d \t %9d \t %9f\n", pPropNode->addrNum, pPropNode->addrName, pPropNode->numRooms, pPropNode->rentCost, pPropNode->distance);
+			printf(" %2d %-24s \t\t %7d \t %9d \t %6.2f km \n", pPropNode->addrNum, pPropNode->addrName, pPropNode->numRooms, pPropNode->rentCost, pPropNode->distance);
 		}
 	}else
 		printf("%s\n", "There are no properties in this list");
 }
 
 void printTabs() {
-	printf("%-27s \t\t %7s \t %7s \t %9s\n", "Address", "# Rooms", "Rent/Room", "Distance");
+	printf("%-27s \t\t %7s \t %7s \t %6s\n", "Address", "# Rooms", "Rent/Room", "Distance");
 	printf("%s \t\t %s \t %s \t %s \n", "--------------------------", "-------", "---------", "---------");
+}
+
+void askOpinion(Property* pHead) {
+	printf("%s\n", "What do you think about this rental property?");
+	printReadable(pHead);
 }
 
 int randInt(int min, int max){

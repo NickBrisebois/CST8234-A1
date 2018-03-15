@@ -18,9 +18,24 @@ typedef struct prop{
  */
 Property* createPropertyNode();
 
-/*
+/**
  * Pushes a new node to a given list 
  */
 void pushNode(Property** ppHead, Property* pNewPropNode);
+
+/**
+ * Removes the given node from the given list
+ */
+void removeNode(Property** ppHead, int index);
+
+/**
+ * Gets node at the given index
+ */
+Property* getNodeAtIndex(Property *pHead, int index);
+
+/**
+ * Returns the number of items in a given list
+ */
+int getCount(Property* pHead);
 
 #endif
