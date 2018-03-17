@@ -1,45 +1,53 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include"rental.h"
 #include"node.h"
 
-Property* createPropertyNode(){
-	Property* pPropNode = calloc(1, sizeof(Property));
+Node* createPropertyNode(){
+	Node* pPropNode = calloc(1, sizeof(Node));
+	pPropNode->pRental = calloc(1, sizeof(Property));
 	return pPropNode;
 }
 
-void pushNode(Property** ppHead, Property* pNewPropNode){
-	if(*ppHead == NULL)
+void pushNode(Node** ppHead, Node* pNewPropNode){
+	if(*ppHead == NULL){
 		*ppHead = pNewPropNode;
-	else{
-		Property* pPropNode = *ppHead;
-		while(pPropNode->pNextProp != NULL)
-			pPropNode = pPropNode->pNextProp;
-		pPropNode->pNextProp = pNewPropNode;
+	}else{
+		Node* pPropNode = *ppHead;
+		while(pPropNode->pNext != NULL)
+			pPropNode = pPropNode->pNext;
+		pPropNode->pNext = pNewPropNode;
 	}
-	pNewPropNode->pNextProp = NULL;
+	pNewPropNode->pNext = NULL;
 }
 
-Property* getNodeAtIndex(Property* pHead, int index){
-	int listCount = getCount(pHead);
-	index = (index <= listCount) ? index : listCount;
-	for(int i = 0; (i < index); i++){
-		if(i == index)
-			return pHead;
-		pHead = pHead->pNextProp;
+Node* getNodeAtIndex(Node* pHead, int i){
+	for(int j = 0; (j < i); j++){
+		if(j == i)
+			break;
+		if(pHead != NULL)
+			pHead = pHead->pNext;
 	}
 	return pHead;
 }
 
-void removeNode(Property** ppHead, int index){
-	Property* toRemove = getNodeAtIndex(*ppHead, index);
-	printf("%d", toRemove->rentCost);
+void removeNode(Node** ppHead, int i){
+	Node* toRemove = getNodeAtIndex(*ppHead, i);
+	Node* prevNode = getNodeAtIndex(*ppHead, i-1);
+	if(getCount(*ppHead) > 0){
+		if(i > 0){
+			prevNode->pNext = toRemove->pNext;
+		}else {
+			*ppHead = toRemove->pNext;
+		}
+	}
 }
 
-int getCount(Property* pHead){
+int getCount(Node* pHead){
 	int count = 0;
 	while(pHead != NULL){
 		count++;
-		pHead = pHead->pNextProp;
+		pHead = pHead->pNext;
 	}
 	return count;
 }

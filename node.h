@@ -1,41 +1,39 @@
 #ifndef NODE_H_INCLUDED
 #define NODE_H_INCLUDED
 
-/**
- * Property struct holding all data used for entire property list and favourites list
- */
-typedef struct prop{
-	int addrNum;
-	char* addrName;
-	int numRooms;
-	int rentCost;
-	float distance;
-	struct prop *pNextProp;
-} Property;
+typedef struct _Node{
+	struct prop* pRental;
+	struct _Node* pNext;
+} Node;
 
 /**
  * Creates a single property node and allocates space for it
  */
-Property* createPropertyNode();
+Node* createPropertyNode();
 
 /**
  * Pushes a new node to a given list 
  */
-void pushNode(Property** ppHead, Property* pNewPropNode);
+void pushNode(Node** ppHead, Node* pNewPropNode);
+
+/**
+ * Insert a node into a given list at the given index
+ */
+void insertAtIndex(Node** ppHead, Node pNewPropNode, int i);
 
 /**
  * Removes the given node from the given list
  */
-void removeNode(Property** ppHead, int index);
+void removeNode(Node** ppHead, int i);
 
 /**
  * Gets node at the given index
  */
-Property* getNodeAtIndex(Property *pHead, int index);
+Node* getNodeAtIndex(Node *pHead, int i);
 
 /**
  * Returns the number of items in a given list
  */
-int getCount(Property* pHead);
+int getCount(Node* pHead);
 
 #endif
