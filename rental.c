@@ -38,3 +38,30 @@ Node* generateProperties(int numProps){
 	}
 	return pHead;
 }
+
+void printProperties(Node* pRentalsHead){
+	float km = 0;
+	if(pRentalsHead != NULL){
+		printTabs();
+		for(Node* pPropNode = pRentalsHead; pPropNode != NULL; pPropNode = pPropNode->pNext){
+			km = pPropNode->pRental->distance / 1000.00;
+			printf("%2d %-24s \t\t %7d \t %9d \t %6.2f km \n", pPropNode->pRental->addrNum, pPropNode->pRental->addrName, pPropNode->pRental->numRooms, pPropNode->pRental->rentCost, km);
+		}
+	}else
+		printf("\n%s\n", "There are no properties in this list");
+}
+
+void printTabs() {
+	printf("\n");
+	printf("%-27s \t\t %7s \t %7s \t %6s\n", "Address", "# Rooms", "Rent/Room", "Distance");
+	printf("%s \t\t %s \t %s \t %s \n", "--------------------------", "-------", "---------", "---------");
+}
+
+void askOpinion(Node* pNode){
+	if(pNode != NULL){
+		float km = pNode->pRental->distance / 1000.00;
+		printf("\n%s\n", "What do you think about this rental property?");
+		printf("\tAddr: %d %s, # Rooms: %d, Rent/Room: $%d, Distance: %.2f km\n", pNode->pRental->addrNum, pNode->pRental->addrName, pNode->pRental->numRooms, pNode->pRental->rentCost, km);
+	}else
+		printf("\nNo more rental properties\n");
+}

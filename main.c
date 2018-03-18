@@ -15,20 +15,18 @@ int main(){
 	Node* pAllHead = generateProperties(10);
 	Node* pFavHead = NULL;
 	Node** ppCurList = &pAllHead;
+	Node* pCurNode = *ppCurList;
+	char menuChoice[256] = "";
+	int skipCount = 0;
 	
 	printProperties(*ppCurList);
 	askOpinion(*ppCurList);
-	getChoice(pAllHead, pFavHead, ppCurList);
 
-	return 0;
-}
-
-void getChoice(Node* pAllHead, Node* pFavHead, Node** ppCurList){
-	char menuChoice[256] = "";
 
 	// Keep looping back to the menu until the user requests to exit by entering q
 	while(strcmp(menuChoice, "q") != 0){
 
+		pCurNode = getNodeAtIndex(*ppCurList, skipCount);
 		printf("\nCommand ('h' for help): ");
 		scanf("%255s", menuChoice);
 		
@@ -39,25 +37,30 @@ void getChoice(Node* pAllHead, Node* pFavHead, Node** ppCurList){
 		// a: Sort list and then print them in tabular form. Then ask for opinion on first property
 		else if(strcmp(menuChoice, "a") == 0){
 			printProperties(*ppCurList);
-			askOpinion(*ppCurList);
+			askOpinion(pCurNode);
 		}
 		// f: Switch current list to favourites. Then ask for opinion on first property
 		else if(strcmp(menuChoice, "f") == 0){
-			printf("%s\n", "Switched to favourites list");
+			skipCount = 0;
+			pCurNode = getNodeAtIndex(*ppCurList, skipCount);
 			ppCurList = &pFavHead;
+			printf("%s\n", "Switched to favourites list");
 			printProperties(*ppCurList);
-			askOpinion(*ppCurList);
+			askOpinion(pCurNode);
 		}
 		// d: Switch to default list, 50/50 chance of adding new property then print all properties
 		else if(strcmp(menuChoice, "d") == 0){
-			printf("%s\n", "Switched to default list");
 			ppCurList = &pAllHead;
+			skipCount = 0;
+			pCurNode = getNodeAtIndex(*ppCurList, skipCount);
+			printf("%s\n", "Switched to default list");
 			// 50/50 chance to add a new property to the default list
 			if(randInt(0, 1) == 1)
 				pushNode(&pAllHead, defineProperty());
 		}
 		// s<n> Sort the current list in different ways
 		else if(menuChoice[0] == 's'){
+			skipCount = 0;
 			switch(menuChoice[1]) {
 				case 'r':
 					sortByRent(ppCurList);
@@ -75,25 +78,42 @@ void getChoice(Node* pAllHead, Node* pFavHead, Node** ppCurList){
 					printf("Unknown sorting method");
 			}
 			printProperties(*ppCurList);
-			askOpinion(*ppCurList);
+			askOpinion(pCurNode);
 		}
 		// l: Remove the just viewed property from the current list then display the next property
 		else if(strcmp(menuChoice, "l") == 0){
 			if(getCount(*ppCurList) > 0) {
-				removeNode(ppCurList, 0);
+				removeNode(ppCurList, skipCount);
+				pCurNode = getNodeAtIndex(*ppCurList, skipCount);
 				printf("\nRental property deleted\n");
-				askOpinion(*ppCurList);
+				askOpinion(pCurNode);
 			}else
 				printf("\nNo more rental properties\n");
 		}
 		// r: Swipe right, remove current item from default list and add it to favourites list
 		else if(strcmp(menuChoice, "r") == 0){
 			if(getCount(*ppCurList) > 0) {
-				pushNode(&pFavHead, removeNode(ppCurList, 0));
+				pushNode(&pFavHead, removeNode(ppCurList, skipCount));
+				pCurNode = getNodeAtIndex(*ppCurList, skipCount);
+				printf("Item added to favourites list");
 			}else
 				printf("\nNo more rental properties\n");
 		}
+		// n: Skip to next property
+		else if(strcmp(menuChoice, "n") == 0){
+			if(pCurNode->pNext!= NULL)
+				pCurNode = getNodeAtIndex(*ppCurList, ++skipCount);
+			else
+				printf("\nNo more rental properties\n");
+			askOpinion(pCurNode);
+		}
+		// Command not found
+		else{
+			printf("Command is not recognized");
+		}
 	}
+
+	return 0;
 }
 
 void printHelp(){
@@ -112,33 +132,8 @@ void printHelp(){
 	printf("\t q - quit the program\n");
 }
 
-void printProperties(Node* pRentalsHead){
-	float km = 0;
-	if(pRentalsHead != NULL){
-		printTabs();
-		for(Node* pPropNode = pRentalsHead; pPropNode != NULL; pPropNode = pPropNode->pNext){
-			km = pPropNode->pRental->distance / 1000.00;
-			printf("%2d %-24s \t\t %7d \t %9d \t %6.2f km \n", pPropNode->pRental->addrNum, pPropNode->pRental->addrName, pPropNode->pRental->numRooms, pPropNode->pRental->rentCost, km);
-		}
-	}else
-		printf("\n%s\n", "There are no properties in this list");
-}
-
-void printTabs() {
-	printf("\n");
-	printf("%-27s \t\t %7s \t %7s \t %6s\n", "Address", "# Rooms", "Rent/Room", "Distance");
-	printf("%s \t\t %s \t %s \t %s \n", "--------------------------", "-------", "---------", "---------");
-}
 
 int randInt(int min, int max){
 	return (rand() % (max + 1 - min) + min);
 }
 
-void askOpinion(Node* pNode){
-	if(pNode != NULL){
-		float km = pNode->pRental->distance / 1000.00;
-		printf("\n%s\n", "What do you think about this rental property?");
-		printf("\tAddr: %d %s, # Rooms: %d, Rent/Room: $%d, Distance: %.2f km\n", pNode->pRental->addrNum, pNode->pRental->addrName, pNode->pRental->numRooms, pNode->pRental->rentCost, km);
-	}else
-		printf("\nNo more rental properties\n");
-}
