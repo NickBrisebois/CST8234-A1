@@ -69,7 +69,6 @@ void sortByAddress(Node** ppProps){
 
 int compareByRent(Node* pPropOne, Node* pPropTwo){
 	int diff = pPropOne->pRental->rentCost - pPropTwo->pRental->rentCost;
-	printf("%d", diff);
 	if(diff == 0)
 		diff = pPropOne->pRental->numRooms - pPropTwo->pRental->numRooms;
 	return diff;
