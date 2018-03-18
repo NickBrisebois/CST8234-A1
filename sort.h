@@ -1,3 +1,9 @@
-void sortByDistance(Property* properties);
-void sortByRent(Property* properties);
-void sortByAddress(Property* properties);
+#ifndef SORT_H_DEFINED
+#define SORT_H_DEFINED
+
+void sortByDistance(Node** ppProps);
+void sortByRent(Node* properties);
+void sortByAddress(Node* properties);
+void swap(Node** pPropOne, Node** pPropTwo);
+
+#endif

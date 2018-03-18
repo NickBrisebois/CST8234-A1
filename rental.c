@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include"node.h"
 #include"rental.h"
+#include"main.h"
 
 Node* defineProperty(){
 	Node* tempProp = createPropertyNode();
@@ -36,17 +37,4 @@ Node* generateProperties(int numProps){
 		pushNode(&pHead, defineProperty());
 	}
 	return pHead;
-}
-
-void addProperty(Node* pHead, Node* pProp){
-	pushNode(&pHead, pProp);
-}
-
-void askOpinion(Node* pNode){
-	if(pNode != NULL){
-		float km = pNode->pRental->distance / 1000.00;
-		printf("\n%s\n", "What do you think about this rental property?");
-		printf("\tAddr: %d %s, # Rooms: %d, Rent/Room: $%d, Distance: %.2f km\n", pNode->pRental->addrNum, pNode->pRental->addrName, pNode->pRental->numRooms, pNode->pRental->rentCost, km);
-	}else
-		printf("\nNo more rental properties\n");
 }

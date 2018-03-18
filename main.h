@@ -27,4 +27,14 @@ void printProperties(Node* pRentalsHead);
  */
 void printTabs();
 
+/**
+ * Get users's opinion the the property at the head of the given list
+ */
+void askOpinion(struct _Node* pNode);
+
+/**
+ * Generate a random int between two given numbers
+ */
+int randInt(int min, int max);
+
 #endif

@@ -44,21 +44,21 @@ void getChoice(Node* pAllHead, Node* pFavHead, Node** ppCurList){
 		// f: Switch current list to favourites. Then ask for opinion on first property
 		else if(strcmp(menuChoice, "f") == 0){
 			printf("%s\n", "Switched to favourites list");
-			*ppCurList = pFavHead;
+			ppCurList = &pFavHead;
 			printProperties(*ppCurList);
 			askOpinion(*ppCurList);
 		}
 		// d: Switch to default list, 50/50 chance of adding new property then print all properties
 		else if(strcmp(menuChoice, "d") == 0){
 			printf("%s\n", "Switched to default list");
-			*ppCurList = pAllHead;
+			ppCurList = &pAllHead;
 			// 50/50 chance to add a new property to the default list
 			if(randInt(0, 1) == 1)
-				addProperty(pAllHead, defineProperty());
+				pushNode(&pAllHead, defineProperty());
 		}
 		// Sort methods
 		else if(menuChoice[0] == 's'){
-			printf("pls sort data");
+			sortByDistance(&pAllHead);
 		}
 		// l: Remove the just viewed property from the current list then display the next property
 		else if(strcmp(menuChoice, "l") == 0){
@@ -73,7 +73,7 @@ void getChoice(Node* pAllHead, Node* pFavHead, Node** ppCurList){
 		// r: Swipe right, remove current item from default list and add it to favourites list
 		else if(strcmp(menuChoice, "r") == 0){
 			if(getCount(*ppCurList) > 0) {
-				pushNode(&pFavHead, &pAllHead[0]);
+				pushNode(&pFavHead, removeNode(ppCurList, 0));
 			}else
 				printf("\nNo more rental properties\n");
 		}
@@ -118,3 +118,11 @@ int randInt(int min, int max){
 	return (rand() % (max + 1 - min) + min);
 }
 
+void askOpinion(Node* pNode){
+	if(pNode != NULL){
+		float km = pNode->pRental->distance / 1000.00;
+		printf("\n%s\n", "What do you think about this rental property?");
+		printf("\tAddr: %d %s, # Rooms: %d, Rent/Room: $%d, Distance: %.2f km\n", pNode->pRental->addrNum, pNode->pRental->addrName, pNode->pRental->numRooms, pNode->pRental->rentCost, km);
+	}else
+		printf("\nNo more rental properties\n");
+}

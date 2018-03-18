@@ -24,7 +24,7 @@ void insertAtIndex(Node** ppHead, Node pNewPropNode, int i);
 /**
  * Removes the given node from the given list
  */
-void removeNode(Node** ppHead, int i);
+Node* removeNode(Node** ppHead, int i);
 
 /**
  * Gets node at the given index

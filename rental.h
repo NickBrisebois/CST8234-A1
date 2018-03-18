@@ -10,7 +10,6 @@ typedef struct prop{
 	int numRooms;
 	int rentCost;
 	float distance;
-	struct prop *pNextProp;
 } Property;
 
 /**
@@ -30,21 +29,5 @@ struct _Node* defineProperty();
  * Generates numProps amount of properties using defineProperty() and returns the head
  */
 struct _Node* generateProperties(int numProps);
-
-/*
- * Add a new property to the given list
- */
-void addProperty(struct _Node* pHead, struct _Node* pProp);
-
-/**
- * Generate a random int between two given numbers
- */
-int randInt(int min, int max);
-
-/**
- * Get users's opinion the the property at the head of the given list
- */
-void askOpinion(struct _Node* pNode);
-
 
 #endif

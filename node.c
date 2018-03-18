@@ -10,13 +10,14 @@ Node* createPropertyNode(){
 }
 
 void pushNode(Node** ppHead, Node* pNewPropNode){
-	if(*ppHead == NULL){
+	Node* tempNode = *ppHead;
+	if(tempNode == NULL){
 		*ppHead = pNewPropNode;
 	}else{
-		Node* pPropNode = *ppHead;
-		while(pPropNode->pNext != NULL)
-			pPropNode = pPropNode->pNext;
-		pPropNode->pNext = pNewPropNode;
+		while(tempNode->pNext != NULL){
+			tempNode = tempNode->pNext;
+		}
+		tempNode->pNext = pNewPropNode;
 	}
 	pNewPropNode->pNext = NULL;
 }
@@ -31,16 +32,21 @@ Node* getNodeAtIndex(Node* pHead, int i){
 	return pHead;
 }
 
-void removeNode(Node** ppHead, int i){
+Node* removeNode(Node** ppHead, int i){
 	Node* toRemove = getNodeAtIndex(*ppHead, i);
-	Node* prevNode = getNodeAtIndex(*ppHead, i-1);
-	if(getCount(*ppHead) > 0){
-		if(i > 0){
-			prevNode->pNext = toRemove->pNext;
-		}else {
-			*ppHead = toRemove->pNext;
+	if(toRemove != NULL){
+		if(getCount(*ppHead) > 0){
+			if(i > 0){
+				Node* prevNode = getNodeAtIndex(*ppHead, i-1);
+				prevNode->pNext = toRemove->pNext;
+				toRemove->pNext = NULL;
+			}else {
+				*ppHead = toRemove->pNext;
+				toRemove->pNext = NULL;
+			}
 		}
 	}
+	return toRemove;
 }
 
 int getCount(Node* pHead){
