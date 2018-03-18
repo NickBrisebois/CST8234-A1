@@ -23,13 +23,14 @@ void pushNode(Node** ppHead, Node* pNewPropNode){
 }
 
 Node* getNodeAtIndex(Node* pHead, int i){
+	Node* tempNode = pHead;
 	for(int j = 0; (j < i); j++){
 		if(j == i)
 			break;
-		if(pHead != NULL)
-			pHead = pHead->pNext;
+		if(tempNode != NULL)
+			tempNode = tempNode->pNext;
 	}
-	return pHead;
+	return tempNode;
 }
 
 Node* removeNode(Node** ppHead, int i){

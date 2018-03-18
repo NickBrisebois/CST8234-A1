@@ -56,9 +56,26 @@ void getChoice(Node* pAllHead, Node* pFavHead, Node** ppCurList){
 			if(randInt(0, 1) == 1)
 				pushNode(&pAllHead, defineProperty());
 		}
-		// Sort methods
+		// s<n> Sort the current list in different ways
 		else if(menuChoice[0] == 's'){
-			sortByDistance(&pAllHead);
+			switch(menuChoice[1]) {
+				case 'r':
+					sortByRent(ppCurList);
+					break;
+				case 'd':
+					sortByDistance(ppCurList);
+					break;
+				case 'n':
+					sortByRooms(ppCurList);
+					break;
+				case 'a':
+					sortByAddress(ppCurList);
+					break;
+				default:
+					printf("Unknown sorting method");
+			}
+			printProperties(*ppCurList);
+			askOpinion(*ppCurList);
 		}
 		// l: Remove the just viewed property from the current list then display the next property
 		else if(strcmp(menuChoice, "l") == 0){
@@ -69,7 +86,6 @@ void getChoice(Node* pAllHead, Node* pFavHead, Node** ppCurList){
 			}else
 				printf("\nNo more rental properties\n");
 		}
-
 		// r: Swipe right, remove current item from default list and add it to favourites list
 		else if(strcmp(menuChoice, "r") == 0){
 			if(getCount(*ppCurList) > 0) {
