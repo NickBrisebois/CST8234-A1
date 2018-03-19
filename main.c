@@ -21,11 +21,11 @@
 int main(){
 	srand(time(NULL));
 
-	Node* pAllHead = generateProperties(10);
+	Node* pAllHead = generateProperties(6);
 	Node* pFavHead = NULL;
 	Node** ppCurList = &pAllHead;
 	Node* pCurNode = *ppCurList;
-	void (*sortMethod)(Node** ppProps);
+	void (*sortMethod)(Node** ppProps) = &sortByRent;
 	char menuChoice[256] = "";
 	int skipCount = 0;
 	

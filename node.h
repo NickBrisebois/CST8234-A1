@@ -1,5 +1,5 @@
-#ifndef NODE_H_INCLUDED
-#define NODE_H_INCLUDED
+#ifndef NODE_H_DEFINED
+#define NODE_H_DEFINED
 
 typedef struct _Node{
 	struct prop* pRental;
